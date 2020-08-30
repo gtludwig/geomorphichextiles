@@ -6,6 +6,8 @@ import com.gusludwig.geomorphichextiles.persistence.model.Face;
 import com.gusludwig.geomorphichextiles.service.FaceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -117,7 +119,7 @@ public class FaceServiceImpl implements FaceService {
 
     @Override
     @Transactional
-    public List<Face> findAll() {
-        return this.faceRepository.findAll();
+    public Page<Face> findAll(Pageable pageable) {
+        return this.faceRepository.findAll(pageable);
     }
 }

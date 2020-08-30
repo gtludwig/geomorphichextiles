@@ -8,12 +8,11 @@ import com.gusludwig.geomorphichextiles.service.FaceService;
 import com.gusludwig.geomorphichextiles.service.generic.TileService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -69,7 +68,6 @@ public class TileServiceImpl implements TileService {
     @Override
     @Transactional
     public Tile save(Tile pojo) {
-//        if()
         Tile tile = this.tileRepository.save(pojo);
         log.info(String.format("Successfully created entity with id ' %s ' ", tile.getId()));
         return tile;
@@ -85,7 +83,7 @@ public class TileServiceImpl implements TileService {
 
     @Override
     @Transactional
-    public List<Tile> findAll() {
-        return this.tileRepository.findAll();
+    public Page<Tile> findAll(Pageable pageable) {
+        return this.tileRepository.findAll(pageable);
     }
 }
