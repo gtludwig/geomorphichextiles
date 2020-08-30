@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Appenders -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <param name="Target" value="System.out" />
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg [%magenta(%X{correlationId})]%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="common-file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <prudent>true</prudent>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/teckro-%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{ISO8601} [%thread] %-5level %logger - %msg - %X{correlationId}%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="org.springframework.beans" level="ERROR"/>
+
+    <logger name="org.springframework.binding" level="ERROR"/>
+
+    <logger name="org.springframework.jdbc" level="ERROR"/>
+
+    <logger name="org.springframework.transaction" level="ERROR"/>
+
+    <logger name="org.springframework.orm" level="ERROR"/>
+
+    <logger name="java.sql" level="ERROR"/>
+
+    <logger name="httpclient.wire.content" level="ERROR"/>
+
+    <logger name="org.apache" level="ERROR"/>
+
+    <logger name="org.mybatis" level="ERROR"/>
+
+    <logger name="org.springframework" level="ERROR"/>
+
+    <logger name="httpclient.wire" level="ERROR"/>
+
+    <logger name="net.sf.ehcache" level="ERROR"/>
+
+    <!-- Root Logger -->
+    <root level="INFO">
+        <appender-ref ref="console" />
+        <appender-ref ref="common-file"/>
+    </root>
+
+</configuration>
