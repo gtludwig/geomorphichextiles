@@ -1,8 +1,8 @@
 package com.gusludwig.geomorphichextiles.service.generic;
 
 import com.gusludwig.geomorphichextiles.persistence.model.BasePojo;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface CrudService<Pojo extends BasePojo> {
 
@@ -12,5 +12,5 @@ public interface CrudService<Pojo extends BasePojo> {
 
     void remove(String id);
 
-    List<Pojo> findAll();
+    Page<Pojo> findAll(Pageable pageable);
 }
