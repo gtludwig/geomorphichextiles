@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/default}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+<div layout:fragment="content" >
+    <div class="container-fluid">
+        <div class="row justify-content-md-center justify-content-lg-center justify-content-xl-center">
+            <div class="col-md-8 col-lg-8 col-xl-8">
+
+                <div class="text-center">
+                    <th:block>
+                        <div class="text-left" >
+                            <a th:href="@{/}" >
+                                <button class="btn btn-outline-primary" th:text="#{gen.back}" />
+                            </a>
+                        </div>
+                    </th:block>
+                    <th:block>
+                        <a th data-target="modal-addFace" data-toggle="modal"
+                           th:attr="data-target='#modal-addFace'">
+                            <span class="btn btn-outline-primary" th:text="#{face.create}"></span>
+                        </a>
+                    </th:block>
+<!--                    <th:block>-->
+<!--                        <a th:href="@{/swagger-ui.html}" target="_blank" >-->
+<!--                            <button class="btn btn-outline-primary" th:text="#{gen.apiDoc}" />-->
+<!--                        </a>-->
+<!--                    </th:block>-->
+                </div>
+                <br />
+                <br />
+                <div class="row text-center">
+                    <div class="col-md-12 col-lg-12 col-xl-12">
+                        <div style="overflow-x: auto;">
+                            <table id="faces" class="table table-bordered table-hover table-responsible-striped">
+                                <thead>
+                                    <tr>
+                                        <th th:text="#{face.pointZero.short}">CP0</th>
+                                        <th th:text="#{face.pointOne.short}">CP1</th>
+                                        <th th:text="#{face.pointTwo.short}">CP2</th>
+                                        <th th:text="#{face.pointThree.short}">CP3</th>
+                                        <th th:text="#{face.pointFour.short}">CP4</th>
+                                        <th th:text="#{face.pointFive.short}">CP5</th>
+                                        <th th:text="#{face.pointSix.short}">CP6</th>
+                                        <th th:text="#{face.pointSeven.short}">CP7</th>
+                                        <th th:text="#{face.pointEight.short}">CP8</th>
+                                        <th th:text="#{face.pointNine.short}">CP9</th>
+                                        <th th:text="#{face.pointTen.short}">CP10</th>
+                                        <th th:text="#{face.pointEleven.short}">CP11</th>
+                                        <th th:text="#{face.pointTwelve.short}">CP12</th>
+                                        <th th:text="#{gen.actions}">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:if="${pojoList.isEmpty()}">
+                                        <td colspan="14" th:text="#{gen.noItems}">noFaces</td>
+                                    </tr>
+                                    <tr th:each="pojo : ${pojoList}">
+                                        <td style="text-align: center" th:text="${pojo.pointZero}" />
+                                        <td style="text-align: center" th:text="${pojo.pointOne}" />
+                                        <td style="text-align: center" th:text="${pojo.pointTwo}" />
+                                        <td style="text-align: center" th:text="${pojo.pointThree}" />
+                                        <td style="text-align: center" th:text="${pojo.pointFour}" />
+                                        <td style="text-align: center" th:text="${pojo.pointFive}" />
+                                        <td style="text-align: center" th:text="${pojo.pointSix}" />
+                                        <td style="text-align: center" th:text="${pojo.pointSeven}" />
+                                        <td style="text-align: center" th:text="${pojo.pointEight}" />
+                                        <td style="text-align: center" th:text="${pojo.pointNine}" />
+                                        <td style="text-align: center" th:text="${pojo.pointTen}" />
+                                        <td style="text-align: center" th:text="${pojo.pointEleven}" />
+                                        <td style="text-align: center" th:text="${pojo.pointTwelve}" />
+                                        <td style="text-align: center">
+<!--                                            <a href="#" class="fa fa-edit" id="editFace" th:title="#{gen.edit}" th:attr="onclick='javascript:retrieveFace(\'' + ${pojo.id} + '\');'"/>-->
+                                            <a href="#" class="fa fa-edit" id="editFace" th:title="#{gen.edit}" th:attr="onclick='retrieveFace(\'' + ${pojo.id} + '\');'"/>
+                                            <a th:href="@{/faces/delete(faceId=${pojo.id})}" th:attr="onclick='return confirm(\'' + #{gen.confirm} + '\');'" class="fa fa-remove" th:title="#{gen.remove}" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="modal fade" th:id="modal-addFace">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <label th:text="#{face.create}"/>
+                                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form role="form" action="#" method="post" th:action="@{/faces/create}">
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="pointZero" th:text="#{face.pointZero}">Options</label>
+                                        </div>
+                                        <select class="custom-select" th:field="*{face.pointZero}" id="pointZero">
+                                            <option th:each="cp : ${T(com.gusludwig.geomorphichextiles.persistence.model.ContactPoint).values()}"
+                                                    th:value="${cp}"
+                                                    th:text="${cp.name()}"
+                                                    class="form-control"/>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="pointOne" th:text="#{face.pointOne}">Options</label>
+                                        </div>
+                                        <select class="custom-select" th:field="*{face.pointOne}" id="pointOne">
+                                            <option th:each="cp : ${T(com.gusludwig.geomorphichextiles.persistence.model.ContactPoint).values()}"
+                                                    th:value="${cp}"
+                                                    th:text="${cp.name()}"
+                                                    class="form-control"/>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="pointTwo" th:text="#{face.pointTwo}">Options</label>
+                                        </div>
+                                        <select class="custom-select" th:field="*{face.pointTwo}" id="pointTwo">
+                                            <option th:each="cp : ${T(com.gusludwig.geomorphichextiles.persistence.model.ContactPoint).values()}"
+                                                    th:value="${cp}"
+                                                    th:text="${cp.name()}"
+                                                    class="form-control"/>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="pointThree" th:text="#{face.pointThree}">Options</label>
+                                        </div>
+                                        <select class="custom-select" th:field="*{face.pointThree}" id="pointThree">
+                                            <option th:each="cp : ${T(com.gusludwig.geomorphichextiles.persistence.model.ContactPoint).values()}"
+                                                    th:value="${cp}"
+                                                    th:text="${cp.name()}"
+                                                    class="form-control"/>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="pointFour" th:text="#{face.pointFour}">Options</label>
+                                        </div>
+                                        <select class="custom-select" th:field="*{face.pointFour}" id="pointFour">
+                                            <option th:each="cp : ${T(com.gusludwig.geomorphichextiles.persistence.model.ContactPoint).values()}"
+                                                    th:value="${cp}"
+                                                    th:text="${cp.name()}"
+                                                    class="form-control"/>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="pointFive" th:text="#{face.pointFive}">Options</label>
+                                        </div>
+                                        <select class="custom-select" th:field="*{face.pointFive}" id="pointFive">
+                                            <option th:each="cp : ${T(com.gusludwig.geomorphichextiles.persistence.model.ContactPoint).values()}"
+                                                    th:value="${cp}"
+                                                    th:text="${cp.name()}"
+                                                    class="form-control"/>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="pointSix" th:text="#{face.pointSix}">Options</label>
+                                        </div>
+                                        <select class="custom-select" th:field="*{face.pointSix}" id="pointSix">
+                                            <option th:each="cp : ${T(com.gusludwig.geomorphichextiles.persistence.model.ContactPoint).values()}"
+                                                    th:value="${cp}"
+                                                    th:text="${cp.name()}"
+                                                    class="form-control"/>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="pointSeven" th:text="#{face.pointSeven}">Options</label>
+                                        </div>
+                                        <select class="custom-select" th:field="*{face.pointSeven}" id="pointSeven">
+                                            <option th:each="cp : ${T(com.gusludwig.geomorphichextiles.persistence.model.ContactPoint).values()}"
+                                                    th:value="${cp}"
+                                                    th:text="${cp.name()}"
+                                                    class="form-control"/>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="pointEight" th:text="#{face.pointEight}">Options</label>
+                                        </div>
+                                        <select class="custom-select" th:field="*{face.pointEight}" id="pointEight">
+                                            <option th:each="cp : ${T(com.gusludwig.geomorphichextiles.persistence.model.ContactPoint).values()}"
+                                                    th:value="${cp}"
+                                                    th:text="${cp.name()}"
+                                                    class="form-control"/>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="pointNine" th:text="#{face.pointNine}">Options</label>
+                                        </div>
+                                        <select class="custom-select" th:field="*{face.pointNine}" id="pointNine">
+                                            <option th:each="cp : ${T(com.gusludwig.geomorphichextiles.persistence.model.ContactPoint).values()}"
+                                                    th:value="${cp}"
+                                                    th:text="${cp.name()}"
+                                                    class="form-control"/>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="pointTen" th:text="#{face.pointTen}">Options</label>
+                                        </div>
+                                        <select class="custom-select" th:field="*{face.pointTen}" id="pointTen">
+                                            <option th:each="cp : ${T(com.gusludwig.geomorphichextiles.persistence.model.ContactPoint).values()}"
+                                                    th:value="${cp}"
+                                                    th:text="${cp.name()}"
+                                                    class="form-control"/>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="pointEleven" th:text="#{face.pointEleven}">Options</label>
+                                        </div>
+                                        <select class="custom-select" th:field="*{face.pointEleven}" id="pointEleven">
+                                            <option th:each="cp : ${T(com.gusludwig.geomorphichextiles.persistence.model.ContactPoint).values()}"
+                                                    th:value="${cp}"
+                                                    th:text="${cp.name()}"
+                                                    class="form-control"/>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="pointTwelve" th:text="#{face.pointTwelve}">Options</label>
+                                        </div>
+                                        <select class="custom-select" th:field="*{face.pointTwelve}" id="pointTwelve">
+                                            <option th:each="cp : ${T(com.gusludwig.geomorphichextiles.persistence.model.ContactPoint).values()}"
+                                                    th:value="${cp}"
+                                                    th:text="${cp.name()}"
+                                                    class="form-control"/>
+                                        </select>
+                                    </div>
+
+                                    <div class="modal-footer" id="createControls">
+                                        <button class="btn btn-secondary" data-dismiss="modal" type="button" th:text="#{gen.cancel}">Close</button>
+                                        <button class="btn btn-success btn-pill"  th:text="#{gen.submit}"
+                                                type="submit">Submit
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="modal fade" th:id="modal-editFace">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <label th:text="#{face.edit}"/>
+                                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form role="form" action="#" method="post" th:action="@{/faces/edit}">
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="pointZeroEdit" th:text="#{face.pointZero}">Options</label>
+                                        </div>
+                                        <select class="custom-select" th:field="*{face.pointZero}" id="pointZeroEdit">
+                                            <option th:each="cp : ${T(com.gusludwig.geomorphichextiles.persistence.model.ContactPoint).values()}"
+                                                    th:value="${cp}"
+                                                    th:text="${cp.name()}"
+                                                    class="form-control"/>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="pointOneEdit" th:text="#{face.pointOne}">Options</label>
+                                        </div>
+                                        <select class="custom-select" th:field="*{face.pointOne}" id="pointOneEdit">
+                                            <option th:each="cp : ${T(com.gusludwig.geomorphichextiles.persistence.model.ContactPoint).values()}"
+                                                    th:value="${cp}"
+                                                    th:text="${cp.name()}"
+                                                    class="form-control"/>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="pointTwoEdit" th:text="#{face.pointTwo}">Options</label>
+                                        </div>
+                                        <select class="custom-select" th:field="*{face.pointTwo}" id="pointTwoEdit">
+                                            <option th:each="cp : ${T(com.gusludwig.geomorphichextiles.persistence.model.ContactPoint).values()}"
+                                                    th:value="${cp}"
+                                                    th:text="${cp.name()}"
+                                                    class="form-control"/>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="pointThreeEdit" th:text="#{face.pointThree}">Options</label>
+                                        </div>
+                                        <select class="custom-select" th:field="*{face.pointThree}" id="pointThreeEdit">
+                                            <option th:each="cp : ${T(com.gusludwig.geomorphichextiles.persistence.model.ContactPoint).values()}"
+                                                    th:value="${cp}"
+                                                    th:text="${cp.name()}"
+                                                    class="form-control"/>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="pointFourEdit" th:text="#{face.pointFour}">Options</label>
+                                        </div>
+                                        <select class="custom-select" th:field="*{face.pointFour}" id="pointFourEdit">
+                                            <option th:each="cp : ${T(com.gusludwig.geomorphichextiles.persistence.model.ContactPoint).values()}"
+                                                    th:value="${cp}"
+                                                    th:text="${cp.name()}"
+                                                    class="form-control"/>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="pointFiveEdit" th:text="#{face.pointFive}">Options</label>
+                                        </div>
+                                        <select class="custom-select" th:field="*{face.pointFive}" id="pointFiveEdit">
+                                            <option th:each="cp : ${T(com.gusludwig.geomorphichextiles.persistence.model.ContactPoint).values()}"
+                                                    th:value="${cp}"
+                                                    th:text="${cp.name()}"
+                                                    class="form-control"/>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="pointSixEdit" th:text="#{face.pointSix}">Options</label>
+                                        </div>
+                                        <select class="custom-select" th:field="*{face.pointSix}" id="pointSixEdit">
+                                            <option th:each="cp : ${T(com.gusludwig.geomorphichextiles.persistence.model.ContactPoint).values()}"
+                                                    th:value="${cp}"
+                                                    th:text="${cp.name()}"
+                                                    class="form-control"/>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="pointSevenEdit" th:text="#{face.pointSeven}">Options</label>
+                                        </div>
+                                        <select class="custom-select" th:field="*{face.pointSeven}" id="pointSevenEdit">
+                                            <option th:each="cp : ${T(com.gusludwig.geomorphichextiles.persistence.model.ContactPoint).values()}"
+                                                    th:value="${cp}"
+                                                    th:text="${cp.name()}"
+                                                    class="form-control"/>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="pointEightEdit" th:text="#{face.pointEight}">Options</label>
+                                        </div>
+                                        <select class="custom-select" th:field="*{face.pointEight}" id="pointEightEdit">
+                                            <option th:each="cp : ${T(com.gusludwig.geomorphichextiles.persistence.model.ContactPoint).values()}"
+                                                    th:value="${cp}"
+                                                    th:text="${cp.name()}"
+                                                    class="form-control"/>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="pointNineEdit" th:text="#{face.pointNine}">Options</label>
+                                        </div>
+                                        <select class="custom-select" th:field="*{face.pointNine}" id="pointNineEdit">
+                                            <option th:each="cp : ${T(com.gusludwig.geomorphichextiles.persistence.model.ContactPoint).values()}"
+                                                    th:value="${cp}"
+                                                    th:text="${cp.name()}"
+                                                    class="form-control"/>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="pointTenEdit" th:text="#{face.pointTen}">Options</label>
+                                        </div>
+                                        <select class="custom-select" th:field="*{face.pointTen}" id="pointTenEdit">
+                                            <option th:each="cp : ${T(com.gusludwig.geomorphichextiles.persistence.model.ContactPoint).values()}"
+                                                    th:value="${cp}"
+                                                    th:text="${cp.name()}"
+                                                    class="form-control"/>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="pointElevenEdit" th:text="#{face.pointEleven}">Options</label>
+                                        </div>
+                                        <select class="custom-select" th:field="*{face.pointEleven}" id="pointElevenEdit">
+                                            <option th:each="cp : ${T(com.gusludwig.geomorphichextiles.persistence.model.ContactPoint).values()}"
+                                                    th:value="${cp}"
+                                                    th:text="${cp.name()}"
+                                                    class="form-control"/>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="pointTwelveEdit" th:text="#{face.pointTwelve}">Options</label>
+                                        </div>
+                                        <select class="custom-select" th:field="*{face.pointTwelve}" id="pointTwelveEdit">
+                                            <option th:each="cp : ${T(com.gusludwig.geomorphichextiles.persistence.model.ContactPoint).values()}"
+                                                    th:value="${cp}"
+                                                    th:text="${cp.name()}"
+                                                    class="form-control"/>
+                                        </select>
+                                    </div>
+
+                                    <div class="modal-footer" id="createControlsEdit">
+                                        <button class="btn btn-secondary" data-dismiss="modal" type="button" th:text="#{gen.cancel}">Close</button>
+                                        <button class="btn btn-success btn-pill"  th:text="#{gen.submit}"
+                                                type="submit">Submit
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        ('#modal-addFace').modal({
+            backdrop: 'static',
+            keyboard: 'false'
+        })
+
+        $('#modal-editFace').dialog({
+            autoOpen: false,
+            closeOnEscape: false
+        });
+
+        $('#editFace').on(click(function (id) {
+
+            $.ajax({
+                url: "/api/faces/"+id,
+                type: "GET",
+                datatype:"json",
+                contentType: 'application/json',
+                mimeType: 'application/json',
+
+                success: function(response) {
+
+                }
+            })
+        }));
+
+        function retrieveFace(id) {
+            $.getJSON("/api/faces/"+id, function(data) {
+                alert(data);
+            });
+
+        }
+
+    });
+
+</script>
+
+
+</body>
+</html>

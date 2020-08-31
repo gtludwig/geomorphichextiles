@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/default}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+<div layout:fragment="content" >
+    <div class="container-fluid">
+        <div class="row justify-content-md-center justify-content-lg-center justify-content-xl-center">
+            <div class="col-md-8 col-lg-8 col-xl-8">
+                <div class="text-center">
+                    <div class="text-center">
+                        <th:block>
+                            <div class="text-left" >
+                                <a th:href="@{/}" >
+                                    <button class="btn btn-outline-primary" th:text="#{gen.back}" />
+                                </a>
+                            </div>
+                        </th:block>
+                        <th:block>
+                            <div class="text-left" >
+                                <a th:href="@{/faces}" >
+                                    <button class="btn btn-outline-primary" th:text="#{face.list}" />
+                                </a>
+                            </div>
+                        </th:block>
+                        <th:block>
+                            <a th:href="@{/swagger-ui.html}" target="_blank" >
+                                <button class="btn btn-outline-primary" th:text="#{gen.apiDoc}" />
+                            </a>
+                        </th:block>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
