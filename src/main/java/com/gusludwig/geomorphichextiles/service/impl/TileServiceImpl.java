@@ -13,7 +13,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -30,14 +32,14 @@ public class TileServiceImpl implements TileService {
     }
 
     @Override
-    public Tile create(String description) {
+    public Optional<Tile> create(String description) {
         Tile tile = new Tile();
         tile.setDescription(description);
         return this.save(tile);
     }
 
     @Override
-    public Tile create(String description, Map<String, Face> facesMap) {
+    public Optional<Tile> create(String description, Map<String, Face> facesMap) {
 
         if(facesMap.containsKey(FacesMapKeys.values())) {
             Tile tile = new Tile();
@@ -49,27 +51,29 @@ public class TileServiceImpl implements TileService {
     }
 
     private boolean validateFace(Face face) {
-        if ()
+        if (faceService.validateFace(face)) {
+            return true;
+        }
         return false;
     }
 
 
     @Override
-    public Tile update(String id, String description, Map<String, Face> facesMap) {
+    public Optional<Tile> update(String id, String description, Map<String, Face> facesMap) {
         return null;
     }
 
     @Override
     @Transactional
-    public Tile findById(String id) {
-        return this.tileRepository.getOne(id);
+    public Optional<Tile> findById(String id) {
+        return Optional.of(this.tileRepository.getOne(id));
     }
 
     @Override
     @Transactional
-    public Tile save(Tile pojo) {
-        Tile tile = this.tileRepository.save(pojo);
-        log.info(String.format("Successfully created entity with id ' %s ' ", tile.getId()));
+    public Optional<Tile> save(Tile pojo) {
+        Optional<Tile> tile = Optional.of(this.tileRepository.save(pojo));
+        log.info(String.format("Successfully created entity with id ' %s ' ", tile.get().getId()));
         return tile;
     }
 
@@ -83,7 +87,7 @@ public class TileServiceImpl implements TileService {
 
     @Override
     @Transactional
-    public Page<Tile> findAll(Pageable pageable) {
-        return this.tileRepository.findAll(pageable);
+    public List<Tile> findAll() {
+        return this.tileRepository.findAll();
     }
 }
