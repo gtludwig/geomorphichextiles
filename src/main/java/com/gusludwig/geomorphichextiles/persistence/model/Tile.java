@@ -2,9 +2,7 @@ package com.gusludwig.geomorphichextiles.persistence.model;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -17,36 +15,42 @@ public class Tile extends BasePojo {
     /**
      * This face is aligned with the top of the screen.
      */
-    @Column(name = "FACE_A")
+    @ManyToOne
+    @JoinColumn(name = "FACE_A_ID")
     private Face faceA;
 
     /**
      * This is the top-right face of the tile.
      */
-    @Column(name = "FACE_B")
+    @ManyToOne
+    @JoinColumn(name = "FACE_B_ID")
     private Face faceB;
 
     /**
      * This is the bottom-right face of the tile.
      */
-    @Column(name = "FACE_C")
+    @ManyToOne
+    @JoinColumn(name = "FACE_C_ID")
     private Face faceC;
 
     /**
      * This face is aligned with the bottom of the screen.
      */
-    @Column(name = "FACE_D")
+    @ManyToOne
+    @JoinColumn(name = "FACE_D_ID")
     private Face faceD;
 
     /**
      * This is the bottom-left face of the tile.
      */
-    @Column(name = "FACE_E")
+    @ManyToOne
+    @JoinColumn(name = "FACE_E_ID")
     private Face faceE;
 
     /**
      * This is the top-left face of the tile.
      */
-    @Column(name = "FACE_F")
+    @ManyToOne
+    @JoinColumn(name = "FACE_F_ID")
     private Face faceF;
 }

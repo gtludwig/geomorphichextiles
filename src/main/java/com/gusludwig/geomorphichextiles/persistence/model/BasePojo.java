@@ -16,6 +16,8 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public class BasePojo implements _Pojo {
 
+    private static final long serialVersionUID = 1L;
+
     @Id
     @Column(name = "ID", unique = true)
     @GeneratedValue(generator = "uuid2")

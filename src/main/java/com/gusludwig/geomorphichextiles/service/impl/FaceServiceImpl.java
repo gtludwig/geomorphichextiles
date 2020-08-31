@@ -6,15 +6,14 @@ import com.gusludwig.geomorphichextiles.persistence.model.Face;
 import com.gusludwig.geomorphichextiles.service.FaceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
-@Service
 @Slf4j
+@Service(value = "faceService")
 public class FaceServiceImpl implements FaceService {
 
     private FaceRepository faceRepository;
@@ -25,14 +24,15 @@ public class FaceServiceImpl implements FaceService {
     }
 
     @Override
-    public Face create(ContactPoint[] contactPoints) {
-        if(validateFace(contactPoints)) {
+    public Optional<Face> create(ContactPoint[] contactPoints) {
+        if(!validateFace(contactPoints)) {
             throw new IllegalArgumentException("Number of contact points MUST be 13.");
         }
         return this.save(this.updateFace(new Face(), contactPoints));
     }
 
     @Override
+    @SuppressWarnings("Duplicates")
     public boolean validateFace(Face face) {
         ContactPoint[] contactPoints = new ContactPoint[13];
         contactPoints[0] = face.getPointZero();
@@ -53,23 +53,26 @@ public class FaceServiceImpl implements FaceService {
     }
 
     private boolean validateFace(ContactPoint[] contactPoints) {
-        if (contactPoints.length == 13) {
-            for (int i =0; i < contactPoints.length; i++) {
-                if (ContactPoint.fromString(contactPoints[i].value()).equals(ContactPoint.UNSUPPORTED)) {
-                    break;
-                }
-            }
-            return true;
-        }
-        return false;
+        return contactPoints.length == 13;
     }
 
+    @Override
+    public Optional<Face> update(String id, ContactPoint[] contactPoints) {
+        Optional<Face> faceOptional = this.save(this.updateFace((Face) this.findById(id).get(), contactPoints));
+        log.info(String.format("Successfully updated entity with id ' %s ' ", faceOptional.get().getId()));
+        return faceOptional;
+    }
 
     @Override
-    public Face update(String id, ContactPoint[] contactPoints) {
-        Face face = this.save(this.updateFace(this.findById(id), contactPoints));
-        log.info(String.format("Successfully updated entity with id ' %s ' ", face.getId()));
-        return face;
+    public Optional<Face> createOneRandomFace() {
+
+        ContactPoint[] contactPoints = new ContactPoint[13];
+
+        for (int i = 0; i < contactPoints.length; i++) {
+            contactPoints[i] = ContactPoint.getRandom();
+        }
+
+        return this.save(this.updateFace(new Face(), contactPoints));
     }
 
     private Face updateFace(Face face, ContactPoint[] contactPoints) {
@@ -92,20 +95,20 @@ public class FaceServiceImpl implements FaceService {
 
     @Override
     @Transactional
-    public Face findById(String id) {
-        return this.faceRepository.getOne(id);
+    public Optional<Face> findById(String id) {
+        return this.faceRepository.findById(id);
     }
 
     @Override
     @Transactional
-    public Face save(Face pojo) {
+    public Optional<Face> save(Face pojo) {
         if (pojo.getId() == null || pojo.getId().isEmpty()) {
             Face face = this.faceRepository.save(pojo);
             log.info(String.format("Successfully created entity with id ' %s ' ", face.getId()));
         } else {
             log.info(String.format("Successfully updated entity with id ' %s ' ", pojo.getId()));
         }
-        Face face = this.faceRepository.save(pojo);
+        Optional<Face> face = Optional.of(this.faceRepository.save(pojo));
         return face;
     }
 
@@ -119,7 +122,7 @@ public class FaceServiceImpl implements FaceService {
 
     @Override
     @Transactional
-    public Page<Face> findAll(Pageable pageable) {
-        return this.faceRepository.findAll(pageable);
+    public List<Face> findAll() {
+        return this.faceRepository.findAll();
     }
 }
