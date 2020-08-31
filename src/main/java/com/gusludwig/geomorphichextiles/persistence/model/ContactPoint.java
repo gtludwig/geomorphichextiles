@@ -4,8 +4,7 @@ public enum ContactPoint {
 
     OPEN("o"),
     INTERFACE("i"),
-    SOLID("s"),
-    UNSUPPORTED("");
+    SOLID("s");
 
     public final String edge;
 
@@ -17,17 +16,7 @@ public enum ContactPoint {
         return edge;
     }
 
-    public static ContactPoint fromString(String edge) {
-        if (edge == null || edge.isEmpty()) {
-            return UNSUPPORTED;
-        }
-
-        for (ContactPoint contactPoint : ContactPoint.values()) {
-            if(edge.trim().equals(contactPoint.value())) {
-                return contactPoint;
-            }
-        }
-
-        return UNSUPPORTED;
+    public static ContactPoint getRandom() {
+        return values()[(int) (Math.random() * values().length)];
     }
 }
