@@ -8,8 +8,6 @@ import com.gusludwig.geomorphichextiles.service.FaceService;
 import com.gusludwig.geomorphichextiles.service.generic.TileService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -17,8 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@Service
 @Slf4j
+@Service(value = "tileService")
 public class TileServiceImpl implements TileService {
 
     private TileRepository tileRepository;

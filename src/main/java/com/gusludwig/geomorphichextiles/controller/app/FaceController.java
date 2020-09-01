@@ -2,7 +2,7 @@ package com.gusludwig.geomorphichextiles.controller.app;
 
 import com.gusludwig.geomorphichextiles.persistence.model.ContactPoint;
 import com.gusludwig.geomorphichextiles.persistence.model.Face;
-import com.gusludwig.geomorphichextiles.service.impl.FaceServiceImpl;
+import com.gusludwig.geomorphichextiles.service.FaceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -18,15 +18,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-@Controller
 @Slf4j
-@RequestMapping(value = "/faces")
 @ApiIgnore
+@Controller
+@RequestMapping(value = "/faces")
 public class FaceController {
 
     private ApplicationContext applicationContext;
 
-    private FaceServiceImpl faceService;
+    private FaceService faceService;
 
     private String lastAction;
 
@@ -35,7 +35,7 @@ public class FaceController {
     }
 
     @Autowired
-    public FaceController(ApplicationContext applicationContext, FaceServiceImpl faceService) {
+    public FaceController(ApplicationContext applicationContext, FaceService faceService) {
         this.applicationContext = applicationContext;
         this.faceService = faceService;
     }

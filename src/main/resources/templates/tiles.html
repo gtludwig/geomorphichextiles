@@ -1,10 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/default}">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
 </head>
 <body>
+
+<div layout:fragment="content" >
+    <div class="container-fluid">
+        <div class="row justify-content-md-center justify-content-lg-center justify-content-xl-center">
+            <div class="col-md-8 col-lg-8 col-xl-8">
+
+                <div class="text-center">
+                    <th:block>
+                        <div class="text-left" >
+                            <a th:href="@{/}" >
+                                <button class="btn btn-outline-primary" th:text="#{gen.back}" />
+                            </a>
+                        </div>
+                    </th:block>
+                    <th:block>
+                        <a th data-target="modal-addFace" data-toggle="modal"
+                           th:attr="data-target='#modal-addFace'">
+                            <span class="btn btn-outline-primary" th:text="#{face.create}"></span>
+                        </a>
+                    </th:block>
+                </div>
+
+                <br />
+                <br />
+                <div class="row text-center">
+                    <div class="col-md-12 col-lg-12 col-xl-12">
+                        <div style="overflow-x: auto;">
+                            <table id="faces" class="table table-bordered table-hover table-responsible-striped">
+                                <thead>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        ('#modal-addTile').modal({
+            backdrop: 'static',
+            keyboard: 'false'
+        })
+
+        $('#modal-editTile').dialog({
+            autoOpen: false,
+            closeOnEscape: false
+        });
+
+        $('#editTile').on(click(function (id) {
+
+            $.ajax({
+                url: "/api/tiles/" + id,
+                type: "GET",
+                datatype: "json",
+                contentType: 'application/json',
+                mimeType: 'application/json',
+
+                success: function (response) {
+
+                }
+            })
+        }));
+    });
+</script>
 
 </body>
 </html>

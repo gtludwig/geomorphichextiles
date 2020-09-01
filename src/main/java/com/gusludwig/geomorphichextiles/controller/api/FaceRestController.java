@@ -47,9 +47,16 @@ public class FaceRestController {
         return ResponseEntity.ok(faceOptional.get());
     }
 
-    @GetMapping(value = "/createRandom")
+    @GetMapping(value = "/createOneRandomFace")
     @ApiOperation(value = "Creates a new face with random types of contact points")
     public ResponseEntity<Face> createRandomFace() {
+        Optional<Face> faceOptional = this.faceService.createOneRandomFace();
+        return ResponseEntity.ok(faceOptional.get());
+    }
+
+    @GetMapping(value = "/createRandomFaces/{numberOfFaces}")
+    @ApiOperation(value = "Creates a new face with random types of contact points")
+    public ResponseEntity<Face> createRandomFaces() {
         Optional<Face> faceOptional = this.faceService.createOneRandomFace();
         return ResponseEntity.ok(faceOptional.get());
     }
