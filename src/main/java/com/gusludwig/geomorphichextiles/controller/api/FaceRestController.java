@@ -49,16 +49,15 @@ public class FaceRestController {
 
     @GetMapping(value = "/createOneRandomFace")
     @ApiOperation(value = "Creates a new face with random types of contact points")
-    public ResponseEntity<Face> createRandomFace() {
-        Optional<Face> faceOptional = this.faceService.createOneRandomFace();
-        return ResponseEntity.ok(faceOptional.get());
+    public ResponseEntity<Optional<Face>> createRandomFace() {
+        return ResponseEntity.ok(this.faceService.createOneRandomFace());
     }
 
     @GetMapping(value = "/createRandomFaces/{numberOfFaces}")
     @ApiOperation(value = "Creates a new face with random types of contact points")
-    public ResponseEntity<Face> createRandomFaces() {
-        Optional<Face> faceOptional = this.faceService.createOneRandomFace();
-        return ResponseEntity.ok(faceOptional.get());
+    public ResponseEntity<Optional<List<Face>>> createRandomFaces(
+            @PathVariable(value = "numberOfFaces") int numberOfFaces) {
+        return ResponseEntity.ok(this.faceService.createRandomFaces(numberOfFaces));
     }
 
     @DeleteMapping(value = "/delete/{faceId}")

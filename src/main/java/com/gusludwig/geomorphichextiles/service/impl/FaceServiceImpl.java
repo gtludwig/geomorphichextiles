@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,6 +74,18 @@ public class FaceServiceImpl implements FaceService {
         }
 
         return this.save(this.updateFace(new Face(), contactPoints));
+    }
+
+    @Override
+    public Optional<List<Face>> createRandomFaces(int numberOfFaces) {
+
+        List<Face> faceList = new ArrayList<>();
+
+        for (int i = 0; i < numberOfFaces; i++) {
+            faceList.add(createOneRandomFace().get());
+        }
+
+        return Optional.of(faceList);
     }
 
     private Face updateFace(Face face, ContactPoint[] contactPoints) {
