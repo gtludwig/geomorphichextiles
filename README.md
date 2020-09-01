@@ -7,7 +7,7 @@ The same set of rules apply for hobbies, in particular those that normally take 
 
 To address the social distancing barrier, many of these enthusiasts started using virtual table-top (VTT) systems where a grid is place on top of a map. This map is either imported to VTT platform or drawn into it.   
 
-The initial goal of this project is to implement a set of rules for hexagonal geomorphic tiles. In order to define that a tile can be placed in any of the six faces of every tile, both tiles need to match their contact faces. This is achieved by a feature called face signature - only when two signatures match, the tiles can be placed next to each other.
+The initial goal of this project is to implement a set of rules for hexagonal geomorphic tiles. In order to define what tiles can be placed adjacent to one another in any of the six faces, both tiles need to have matching contact faces in those directions. This is achieved by a feature called face signature - only when two signatures match, the tiles can be placed next to each other.
 
 A hexagonal tile has six sides, faces A to F, like so:
 
@@ -22,7 +22,7 @@ F | top left
 
 After selecting the first tile (FT), all tiles with any face that matches one of the six will be loaded into a set.
 
-Once the second tile is selected, an adjacent to the first, the other sets are updated according to two face signatures now.
+Once the second tile, adjacent to the first, is selected, the other sets are updated to match the two face signatures already defined.
 
 All the remaining sets will be updated according to two, three, four, five or six face signatures, depending on the position of the tile and its neighbours.
 
@@ -36,6 +36,8 @@ Once the grid is validated, an image of each tile is rendered onto the map, and 
 
 ## Running the project
 This is a maven project built with Spring Boot. Once cloned, the project can be started with
+
+`$ mvn clean install`
 
 `$ mvn spring-boot:run`
 
