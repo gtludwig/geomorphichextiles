@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @Service(value = "faceService")
@@ -86,6 +84,27 @@ public class FaceServiceImpl implements FaceService {
         }
 
         return Optional.of(faceList);
+    }
+
+    @Override
+    @SuppressWarnings("Duplicates")
+    public Face reverseFace(Face face) {
+        ContactPoint[] contactPoints = new ContactPoint[13];
+        contactPoints[0] = face.getPointZero();
+        contactPoints[1] = face.getPointOne();
+        contactPoints[2] = face.getPointTwo();
+        contactPoints[3] = face.getPointThree();
+        contactPoints[4] = face.getPointFour();
+        contactPoints[5] = face.getPointFive();
+        contactPoints[6] = face.getPointSix();
+        contactPoints[7] = face.getPointSeven();
+        contactPoints[8] = face.getPointEight();
+        contactPoints[9] = face.getPointNine();
+        contactPoints[10] = face.getPointTen();
+        contactPoints[11] = face.getPointEleven();
+        contactPoints[12] = face.getPointTwelve();
+        Collections.reverse(Arrays.asList(contactPoints));
+        return updateFace(new Face(), contactPoints);
     }
 
     private Face updateFace(Face face, ContactPoint[] contactPoints) {

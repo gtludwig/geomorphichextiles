@@ -18,4 +18,6 @@ public interface FaceService extends CrudService<Face> {
     Optional<Face> createOneRandomFace();
 
     Optional<List<Face>> createRandomFaces(int numberOfFaces);
+
+    Face reverseFace(Face face);
 }
