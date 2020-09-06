@@ -1,7 +1,7 @@
 package com.gusludwig.geomorphichextiles.service.impl;
 
 import com.gusludwig.geomorphichextiles.persistence.dao.FaceRepository;
-import com.gusludwig.geomorphichextiles.persistence.model.ContactPoint;
+import com.gusludwig.geomorphichextiles.persistence.model.ContactPointType;
 import com.gusludwig.geomorphichextiles.persistence.model.Face;
 import com.gusludwig.geomorphichextiles.service.FaceService;
 import lombok.extern.slf4j.Slf4j;
@@ -23,41 +23,41 @@ public class FaceServiceImpl implements FaceService {
     }
 
     @Override
-    public Optional<Face> create(ContactPoint[] contactPoints) {
-        if(!validateFace(contactPoints)) {
+    public Optional<Face> create(ContactPointType[] contactPointTypes) {
+        if(!validateFace(contactPointTypes)) {
             throw new IllegalArgumentException("Number of contact points MUST be 13.");
         }
-        return this.save(this.updateFace(new Face(), contactPoints));
+        return this.save(this.updateFace(new Face(), contactPointTypes));
     }
 
     @Override
     @SuppressWarnings("Duplicates")
     public boolean validateFace(Face face) {
-        ContactPoint[] contactPoints = new ContactPoint[13];
-        contactPoints[0] = face.getPointZero();
-        contactPoints[1] = face.getPointOne();
-        contactPoints[2] = face.getPointTwo();
-        contactPoints[3] = face.getPointThree();
-        contactPoints[4] = face.getPointFour();
-        contactPoints[5] = face.getPointFive();
-        contactPoints[6] = face.getPointSix();
-        contactPoints[7] = face.getPointSeven();
-        contactPoints[8] = face.getPointEight();
-        contactPoints[9] = face.getPointNine();
-        contactPoints[10] = face.getPointTen();
-        contactPoints[11] = face.getPointEleven();
-        contactPoints[11] = face.getPointTwelve();
+        ContactPointType[] contactPointTypes = new ContactPointType[13];
+        contactPointTypes[0] = face.getPointZero();
+        contactPointTypes[1] = face.getPointOne();
+        contactPointTypes[2] = face.getPointTwo();
+        contactPointTypes[3] = face.getPointThree();
+        contactPointTypes[4] = face.getPointFour();
+        contactPointTypes[5] = face.getPointFive();
+        contactPointTypes[6] = face.getPointSix();
+        contactPointTypes[7] = face.getPointSeven();
+        contactPointTypes[8] = face.getPointEight();
+        contactPointTypes[9] = face.getPointNine();
+        contactPointTypes[10] = face.getPointTen();
+        contactPointTypes[11] = face.getPointEleven();
+        contactPointTypes[11] = face.getPointTwelve();
 
-        return validateFace(contactPoints);
+        return validateFace(contactPointTypes);
     }
 
-    private boolean validateFace(ContactPoint[] contactPoints) {
-        return contactPoints.length == 13;
+    private boolean validateFace(ContactPointType[] contactPointTypes) {
+        return contactPointTypes.length == 13;
     }
 
     @Override
-    public Optional<Face> update(String id, ContactPoint[] contactPoints) {
-        Optional<Face> faceOptional = this.save(this.updateFace((Face) this.findById(id).get(), contactPoints));
+    public Optional<Face> update(String id, ContactPointType[] contactPointTypes) {
+        Optional<Face> faceOptional = this.save(this.updateFace((Face) this.findById(id).get(), contactPointTypes));
         log.info(String.format("Successfully updated entity with id ' %s ' ", faceOptional.get().getId()));
         return faceOptional;
     }
@@ -65,13 +65,18 @@ public class FaceServiceImpl implements FaceService {
     @Override
     public Optional<Face> createOneRandomFace() {
 
-        ContactPoint[] contactPoints = new ContactPoint[13];
+        ContactPointType[] contactPointTypes = new ContactPointType[13];
+        Random random = new Random();
 
-        for (int i = 0; i < contactPoints.length; i++) {
-            contactPoints[i] = ContactPoint.getRandom();
+        for (int i = 0; i < contactPointTypes.length; i++) {
+            contactPointTypes[i] = getRandomContactPointType(random);
         }
 
-        return this.save(this.updateFace(new Face(), contactPoints));
+        return this.save(this.updateFace(new Face(), contactPointTypes));
+    }
+
+    private ContactPointType getRandomContactPointType(Random random) {
+        return ContactPointType.values()[random.nextInt(ContactPointType.values().length)];
     }
 
     @Override
@@ -89,38 +94,38 @@ public class FaceServiceImpl implements FaceService {
     @Override
     @SuppressWarnings("Duplicates")
     public Face reverseFace(Face face) {
-        ContactPoint[] contactPoints = new ContactPoint[13];
-        contactPoints[0] = face.getPointZero();
-        contactPoints[1] = face.getPointOne();
-        contactPoints[2] = face.getPointTwo();
-        contactPoints[3] = face.getPointThree();
-        contactPoints[4] = face.getPointFour();
-        contactPoints[5] = face.getPointFive();
-        contactPoints[6] = face.getPointSix();
-        contactPoints[7] = face.getPointSeven();
-        contactPoints[8] = face.getPointEight();
-        contactPoints[9] = face.getPointNine();
-        contactPoints[10] = face.getPointTen();
-        contactPoints[11] = face.getPointEleven();
-        contactPoints[12] = face.getPointTwelve();
-        Collections.reverse(Arrays.asList(contactPoints));
-        return updateFace(new Face(), contactPoints);
+        ContactPointType[] contactPointTypes = new ContactPointType[13];
+        contactPointTypes[0] = face.getPointZero();
+        contactPointTypes[1] = face.getPointOne();
+        contactPointTypes[2] = face.getPointTwo();
+        contactPointTypes[3] = face.getPointThree();
+        contactPointTypes[4] = face.getPointFour();
+        contactPointTypes[5] = face.getPointFive();
+        contactPointTypes[6] = face.getPointSix();
+        contactPointTypes[7] = face.getPointSeven();
+        contactPointTypes[8] = face.getPointEight();
+        contactPointTypes[9] = face.getPointNine();
+        contactPointTypes[10] = face.getPointTen();
+        contactPointTypes[11] = face.getPointEleven();
+        contactPointTypes[12] = face.getPointTwelve();
+        Collections.reverse(Arrays.asList(contactPointTypes));
+        return updateFace(new Face(), contactPointTypes);
     }
 
-    private Face updateFace(Face face, ContactPoint[] contactPoints) {
-        face.setPointZero(contactPoints[0]);
-        face.setPointOne(contactPoints[1]);
-        face.setPointTwo(contactPoints[2]);
-        face.setPointThree(contactPoints[3]);
-        face.setPointFour(contactPoints[4]);
-        face.setPointFive(contactPoints[5]);
-        face.setPointSix(contactPoints[6]);
-        face.setPointSeven(contactPoints[7]);
-        face.setPointEight(contactPoints[8]);
-        face.setPointNine(contactPoints[9]);
-        face.setPointTen(contactPoints[10]);
-        face.setPointEleven(contactPoints[11]);
-        face.setPointTwelve(contactPoints[12]);
+    private Face updateFace(Face face, ContactPointType[] contactPointTypes) {
+        face.setPointZero(contactPointTypes[0]);
+        face.setPointOne(contactPointTypes[1]);
+        face.setPointTwo(contactPointTypes[2]);
+        face.setPointThree(contactPointTypes[3]);
+        face.setPointFour(contactPointTypes[4]);
+        face.setPointFive(contactPointTypes[5]);
+        face.setPointSix(contactPointTypes[6]);
+        face.setPointSeven(contactPointTypes[7]);
+        face.setPointEight(contactPointTypes[8]);
+        face.setPointNine(contactPointTypes[9]);
+        face.setPointTen(contactPointTypes[10]);
+        face.setPointEleven(contactPointTypes[11]);
+        face.setPointTwelve(contactPointTypes[12]);
 
         return face;
     }

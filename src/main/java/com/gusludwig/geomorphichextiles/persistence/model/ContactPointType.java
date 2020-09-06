@@ -1,6 +1,6 @@
 package com.gusludwig.geomorphichextiles.persistence.model;
 
-public enum ContactPoint {
+public enum ContactPointType {
 
     OPEN("o"),
     INTERFACE("i"),
@@ -8,15 +8,11 @@ public enum ContactPoint {
 
     public final String edge;
 
-    ContactPoint(String edge) {
+    ContactPointType(String edge) {
         this.edge = edge;
     }
 
     public String value() {
         return edge;
-    }
-
-    public static ContactPoint getRandom() {
-        return values()[(int) (Math.random() * values().length)];
     }
 }

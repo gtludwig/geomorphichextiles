@@ -1,6 +1,6 @@
 package com.gusludwig.geomorphichextiles.controller.app;
 
-import com.gusludwig.geomorphichextiles.persistence.model.ContactPoint;
+import com.gusludwig.geomorphichextiles.persistence.model.ContactPointType;
 import com.gusludwig.geomorphichextiles.persistence.model.Face;
 import com.gusludwig.geomorphichextiles.service.FaceService;
 import lombok.extern.slf4j.Slf4j;
@@ -125,24 +125,24 @@ public class FaceController {
     }
 
     @SuppressWarnings("Duplicates")
-    private ContactPoint[] buildContactPointsFromUI(Face uiFace) {
+    private ContactPointType[] buildContactPointsFromUI(Face uiFace) {
 
-        ContactPoint[] contactPoints = new ContactPoint[13];
-        contactPoints[0] = uiFace.getPointZero();
-        contactPoints[1] = uiFace.getPointOne();
-        contactPoints[2] = uiFace.getPointTwo();
-        contactPoints[3] = uiFace.getPointThree();
-        contactPoints[4] = uiFace.getPointFour();
-        contactPoints[5] = uiFace.getPointFive();
-        contactPoints[6] = uiFace.getPointSix();
-        contactPoints[7] = uiFace.getPointSeven();
-        contactPoints[8] = uiFace.getPointEight();
-        contactPoints[9] = uiFace.getPointNine();
-        contactPoints[10] = uiFace.getPointTen();
-        contactPoints[11] = uiFace.getPointEleven();
-        contactPoints[12] = uiFace.getPointTwelve();
+        ContactPointType[] contactPointTypes = new ContactPointType[13];
+        contactPointTypes[0] = uiFace.getPointZero();
+        contactPointTypes[1] = uiFace.getPointOne();
+        contactPointTypes[2] = uiFace.getPointTwo();
+        contactPointTypes[3] = uiFace.getPointThree();
+        contactPointTypes[4] = uiFace.getPointFour();
+        contactPointTypes[5] = uiFace.getPointFive();
+        contactPointTypes[6] = uiFace.getPointSix();
+        contactPointTypes[7] = uiFace.getPointSeven();
+        contactPointTypes[8] = uiFace.getPointEight();
+        contactPointTypes[9] = uiFace.getPointNine();
+        contactPointTypes[10] = uiFace.getPointTen();
+        contactPointTypes[11] = uiFace.getPointEleven();
+        contactPointTypes[12] = uiFace.getPointTwelve();
 
-        return contactPoints;
+        return contactPointTypes;
 
     }
 }

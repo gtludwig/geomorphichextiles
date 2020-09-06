@@ -17,14 +17,14 @@ public class Face extends BasePojo {
      * Edge of the face, at distance zero.
      */
     @Column(name = "POINT_ZERO")
-    private ContactPoint pointZero = ContactPoint.OPEN;
+    private ContactPointType pointZero = ContactPointType.OPEN;
 
     /**
      * First contact point edge of the face.
      * Distance from contact point zero: 1/8 or 0.125.
      */
     @Column(name = "POINT_ONE")
-    private ContactPoint pointOne = ContactPoint.OPEN;
+    private ContactPointType pointOne = ContactPointType.OPEN;
 
     /**
      * Second contact point edge of the face.
@@ -32,14 +32,14 @@ public class Face extends BasePojo {
      * Distance from contact point zero: 1/6 or 0.166.
      */
     @Column(name = "POINT_TWO")
-    private ContactPoint pointTwo = ContactPoint.OPEN;
+    private ContactPointType pointTwo = ContactPointType.OPEN;
 
     /**
      * Third contact point edge of the face.
      * Distance from contact point zero: 1/4 or 0.25.
      */
     @Column(name = "POINT_THREE")
-    private ContactPoint pointThree = ContactPoint.OPEN;
+    private ContactPointType pointThree = ContactPointType.OPEN;
 
     /**
      * Fourth contact point edge of the face.
@@ -47,28 +47,28 @@ public class Face extends BasePojo {
      * Distance from contact point zero: 1/3 or 0.333.
      */
     @Column(name = "POINT_FOUR")
-    private ContactPoint pointFour = ContactPoint.OPEN;
+    private ContactPointType pointFour = ContactPointType.OPEN;
 
     /**
      * Fifth contact point edge of the face.
      * Distance from contact point zero: 3/8 or 0.375.
      */
     @Column(name = "POINT_FIVE")
-    private ContactPoint pointFive = ContactPoint.OPEN;
+    private ContactPointType pointFive = ContactPointType.OPEN;
 
     /**
      * Sixth contact point edge of the face.
      * Distance from contact point zero: 1/2 or 0.5.
      */
     @Column(name = "POINT_SIX")
-    private ContactPoint pointSix = ContactPoint.OPEN;
+    private ContactPointType pointSix = ContactPointType.OPEN;
 
     /**
      * Seventh contact point edge of the face.
      * Distance from contact point zero: 5/8 or 0.625.
      */
     @Column(name = "POINT_SEVEN")
-    private ContactPoint pointSeven = ContactPoint.OPEN;
+    private ContactPointType pointSeven = ContactPointType.OPEN;
 
     /**
      * Eighth contact point edge of the face.
@@ -76,14 +76,14 @@ public class Face extends BasePojo {
      * Distance from contact point zero: 2/3 or 0.666.
      */
     @Column(name = "POINT_EIGHT")
-    private ContactPoint pointEight = ContactPoint.OPEN;
+    private ContactPointType pointEight = ContactPointType.OPEN;
 
     /**
      * Ninth contact point edge of the face.
      * Distance from contact point zero: 3/4 or 0.75.
      */
     @Column(name = "POINT_NINE")
-    private ContactPoint pointNine = ContactPoint.OPEN;
+    private ContactPointType pointNine = ContactPointType.OPEN;
 
     /**
      * Tenth contact point edge of the face.
@@ -91,21 +91,21 @@ public class Face extends BasePojo {
      * Distance from contact point zero: 5/6 or 0.833.
      */
     @Column(name = "POINT_TEN")
-    private ContactPoint pointTen = ContactPoint.OPEN;
+    private ContactPointType pointTen = ContactPointType.OPEN;
 
     /**
      * Eleventh contact point edge of the face.
      * Distance from contact point zero: 7/8 or 0.875.
      */
     @Column(name = "POINT_ELEVEN")
-    private ContactPoint pointEleven = ContactPoint.OPEN;
+    private ContactPointType pointEleven = ContactPointType.OPEN;
 
     /**
      * End of the face.
      * Distance from contact point zero: 1.
      */
     @Column(name = "POINT_TWELVE")
-    private ContactPoint pointTwelve = ContactPoint.OPEN;
+    private ContactPointType pointTwelve = ContactPointType.OPEN;
 
 
 }
