@@ -20,7 +20,6 @@ import java.util.Random;
 import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(SpringExtension.class)
-//@ContextConfiguration(classes = { SpringTestConfiguration.class })
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class FaceServiceImplTest {
 
