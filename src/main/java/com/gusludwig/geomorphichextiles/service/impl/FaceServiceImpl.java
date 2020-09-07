@@ -139,14 +139,13 @@ public class FaceServiceImpl implements FaceService {
     @Override
     @Transactional
     public Optional<Face> save(Face pojo) {
+        Face face = this.faceRepository.save(pojo);
         if (pojo.getId() == null || pojo.getId().isEmpty()) {
-            Face face = this.faceRepository.save(pojo);
             log.info(String.format("Successfully created entity with id ' %s ' ", face.getId()));
         } else {
             log.info(String.format("Successfully updated entity with id ' %s ' ", pojo.getId()));
         }
-        Optional<Face> face = Optional.of(this.faceRepository.save(pojo));
-        return face;
+        return Optional.of(face);
     }
 
     @Override

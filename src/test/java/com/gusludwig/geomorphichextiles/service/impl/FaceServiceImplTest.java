@@ -1,35 +1,34 @@
 package com.gusludwig.geomorphichextiles.service.impl;
 
-import com.gusludwig.geomorphichextiles.SpringTestConfiguration;
 import com.gusludwig.geomorphichextiles.persistence.dao.FaceRepository;
 import com.gusludwig.geomorphichextiles.persistence.model.ContactPointType;
 import com.gusludwig.geomorphichextiles.persistence.model.Face;
-import com.gusludwig.geomorphichextiles.service.FaceService;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Optional;
 import java.util.Random;
 
+import static org.mockito.ArgumentMatchers.any;
+
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { SpringTestConfiguration.class })
+//@ContextConfiguration(classes = { SpringTestConfiguration.class })
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class FaceServiceImplTest {
 
-//    @Mock
-//    private FaceRepository faceRepository;
+    @Mock
+    private FaceRepository faceRepository;
 
-//    @InjectMocks
-//    private FaceService faceService;
+    @InjectMocks
+    private FaceServiceImpl faceService;
 
     private Face face;
 
@@ -44,7 +43,6 @@ class FaceServiceImplTest {
     }
 
     private Face buildRandomFace() {
-//        random = new Random();
 
         face = new Face();
 
@@ -65,25 +63,45 @@ class FaceServiceImplTest {
         return face;
     }
 
+    private ContactPointType[] getContactPointTypeArray(Face face) {
+        ContactPointType[] contactPointTypes = new ContactPointType[13];
+        contactPointTypes[0] = face.getPointZero();
+        contactPointTypes[1] = face.getPointOne();
+        contactPointTypes[2] = face.getPointTwo();
+        contactPointTypes[3] = face.getPointThree();
+        contactPointTypes[4] = face.getPointFour();
+        contactPointTypes[5] = face.getPointFive();
+        contactPointTypes[6] = face.getPointSix();
+        contactPointTypes[7] = face.getPointSeven();
+        contactPointTypes[8] = face.getPointEight();
+        contactPointTypes[9] = face.getPointNine();
+        contactPointTypes[10] = face.getPointTen();
+        contactPointTypes[11] = face.getPointEleven();
+        contactPointTypes[11] = face.getPointTwelve();
+
+        return  contactPointTypes;
+    }
+
     private ContactPointType getRandomContactPointType() {
         return ContactPointType.values()[random.nextInt(ContactPointType.values().length)];
     }
 
-//    @Test
-//    void create() {
-//    }
-
     @Test
-    void assertBlahTrue() {
-        Assert.assertTrue(true);
+    void create() {
+        Mockito.when(this.faceRepository.save(any())).thenReturn(face);
+        Assert.assertNotNull(Optional.of(this.faceService.create(getContactPointTypeArray(face))));
     }
 
-//    @Test
-//    void validateFace() {
-//        face = buildRandomFace();
-//        Mockito.when(faceService.validateFace(face)).thenReturn(true);
-//        Assert.assertTrue(faceService.validateFace(face));
-//    }
+    @Test
+    void validateFace() {
+        Assert.assertTrue(this.faceService.validateFace(face));
+    }
+
+    @Test
+    void createRandomFace() {
+        Mockito.when(this.faceRepository.save(any())).thenReturn(face);
+        Assert.assertNotNull(Optional.of(this.faceService.createOneRandomFace()));
+    }
 
 //    @Test
 //    void update() {
